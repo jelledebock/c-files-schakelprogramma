@@ -1,0 +1,160 @@
+----------------------------
+-- Notas les 2 29/09/2015 --
+----------------------------
+
+/*Algemeen*/
+Enkel variabelen globaal declareren die je nodig hebt in het hele programma.
+
+Een procedure is altijd met void, het doet iets maar returnt niks.
+Een functie doet een bepaalde berekening en returnt het resultaat. Een functie is een onderdeel van een opdracht, want je doet iets met het resultaat.
+
+/*Recursie*/
+Recursie bij fibonnaci reeks
+
+vb.                          f(8)
+                    /                    \
+            f(7)                             f(6)
+         /       \                        /       \
+    f(5)            f(6)            f(4)            f(5)
+  /     \         /     \         /     \          /    \
+f(3)    f(4)    f(4)    f(5)    f(2)    f(3)    f(3)    f(4)
+...           
+
+Je ziet hier dat veel waardes dubbel berekend wordt.
+
+-- Nadeel van recursie
+Bij recursie wordt een stack bewaard, waar alle variabelen op bijgehouden worden...
+Bij recursie springt hij naar de functie, maar bij deze jump komt wat administratie kijken. Zijn huidige toestand moet opgeslaan worden.
+
+/* Arrays */
+In C wordt geen boodschap gegeven wanneer je buiten je array gaat en worden er dus onvoorspelbare waardes gebruikt.
+Wanneer je te weinig waardes opgeeft in array declaration dan gaat de rest toch opvullen.
+
+voorbeeld:
+int t[50]={0};      //alles zal met 0 gevuld worden
+int t[50]={1};      //eerste 1, de rest zal allemaal 0 zijn
+
+Een lengte kan nooit berekend worden over functies geen, je moet dus ook steeds de lengte van de array meegeven wil een andere functie hiermee
+kunnen werken. 
+
+Het *adres* van de array wordt doorgegeven naar een andere functie. Dus je kan de inhoud van de array wijzigen.
+In C(++) wordt zeer veel gekopieerd, je moet expliciet zeggen dat je het adres wilt van deze variabele.
+Oplossing: van een variabele een const variabele maken.
+
+/*Zoeken*/
+Binary search:
+vb 35 in lineaire array van 100 elementen
+middelste is > 35 = 50
+dan 35 < 35 = 25
+dan ...
+telkens je interval halveren
+
+Stappen plan:
+1/ Domein afbakenen (min index en max index)
+2/ Zoekindex is floor((max+min)/2)
+3/ Vervang je zoekgrenzen;
+    zoekindex = minindex als waarde[zoekindex]<getal
+    zoekindex = maxindex als waarde[zoekindex]>getal
+4/Repeat ... tot minindex>=maxindex
+
+Element invoegen:
+! Achteraan beginnen
+
+/* Pointers !! */
+Good practises:
+*  pointer vars laten beginnen met p
+*  declareer je pointers apart van de andere variabelen
+
+int *pg;    //lees pg is een pointer naar een int
+
+& is de adresoperator, hiermee vraag je het adres op van een variabele
+%p om adres (pointer) uit te schrijven...
+int *pg;
+    prinft(pg=%p,pg);   //schrijft het adres van de pointer zelf uit
+    prinft(pg=%p,&pg);  //schrijft naar welk adres de pointer wijst
+
+De inhoud van pointers 
+int g=5, n=3, *p=&g, *q=&n;
+
+*q = *p
+
+Null pointer is een pointer die naar niets wijst, maar de pointer zelf bestaat wel...
+handig wanneer je dit wil checken : if (p) (als de pointer überhaupt bestaat)
+void *v pointers, zijn pointers waarvan je niet weet naar waar je gaat wijzen...
+Je void * pointer kan niet gederefeerd,
+Je kan wel casten: 
+van void * naar double
+*(double *)v
+
+--Belangrijke toepassingen van pointers
+
+==1 Call by reference
+
+Alles in C(++) wordt by value doorgegeven, tenzij je pointers gebruikt
+-- By value
+
+//De -5 wordt enkel doorgegeven naar het programma zonder dat de i
+//variabele verandert in hoofdprogramma.
+
+int i=-5;
+tegengestelde(i);
+
+void tegengestelde(int a){
+ a *= -1; 
+}
+
+-- By reference
+
+//Hier wordt i ook aangepast in hoofdprogramma
+
+int i=-5;
+tegengestelde(&i);
+...
+void tegengesteld(int *a)
+{
+  *a *= -1;
+}
+
+Wijzigen of berekenen = POINTER !
+
+==2 In arrays
+&t[0] komt overeen met t
+t is een constante pointer, deze kan je niet meer verplaatsen...
+dus *t => waarde van t[0]
+
+oefening
+int t[6]={2};                   // t [2,0,0,0,0]
+int *p = &t[4], *q = &p[-3];  
+*p = 5;                         
+q[0]=6;
+p[-1] -= *t;                    // t [2,6,0,-2,5,0]
+
+Truc voor sorteren:
+twee arrays met 1 ervan de pointers naar de waarde
+de pointer array sorteren ipv de array zelf te verschuiven
+int *x[5]; //array van pointers naar integers
+
+int (*y)[5]; //pointer naar array van integers
+
+van zodra je een pointer hebt naar het begin van de array kan je [] gebruiken...
+
+Oefening: vul 1e helft op met -5 en de tweede helft met 5
+
+vulop(tab, 50, -5);
+vulop(&tab[50],50,5);
+
+pointer naar const
+const int *q = &n;
+het adres van de pointer mag wijzigen, maar hij mag de inhoud niet wijzigen...
+
+Een strengere pointer mag naar een minder strenge pointer wijzen, omgekeerd niet
+
+-- Bewerkingen op pointers
+int t[5]={0};
+int *p, *q;
+p = &t[3];      //mag ook &t[i]=> t+i, hier p = t+3
+t = p+1;        // mag niet want t is een constante pointer !!!!!!
+p++;            // verhoogt pointer index
+(*p)++;         // verhoogt wat in p staat
+*p++;           // eerst p opvragen en dan pointer verzetten 
+q-p;            // checken hoe ver de pointers uit mekaar staan 
