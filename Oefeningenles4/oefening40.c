@@ -15,8 +15,12 @@ int main()
 
 	/*Oefening b*/
 	schrijf_deeltal(&zes);
-
 	free(zes.delers);
-	
+
+	/*Oefening 4 test*/
+	struct Deeltal een_deeltal;
+	lees_deeltal(&een_deeltal);
+	schrijf_deeltal(&een_deeltal);
+	free(een_deeltal.delers);
 }
 

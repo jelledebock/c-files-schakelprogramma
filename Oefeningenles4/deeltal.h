@@ -30,7 +30,7 @@ void schrijf_deeltal(const struct Deeltal *getal)
 
 int aantal_delers_van(int x)
 {
-	int i =-1 ;
+	int i=0 ;
 	int getal = 1;
 
 	while(getal<=(int)sqrt((double)x))
@@ -57,4 +57,24 @@ int * delers_van(int x, int n)
 	}
 	return delers-n;
 }
+
+void vul_aan(struct Deeltal *g)
+{
+	g->aantal_delers=aantal_delers_van(g->waarde);
+	g->delers = delers_van(g->waarde,g->aantal_delers);
+
+}
+
+struct Deeltal * lees_deeltal(struct Deeltal *g)
+{
+	int getal;
+	printf("Geef een geheel getal in: ");
+	scanf("%d",&getal);
+
+	g->waarde=getal;
+	vul_aan(g);
+
+	return g;
+}
+
 #endif
