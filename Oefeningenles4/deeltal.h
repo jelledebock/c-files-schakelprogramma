@@ -143,6 +143,7 @@ void release_memory(struct Deeltal * deeltallen, int n)
     {
         free(deeltallen[i].delers);
     }
+    free(deeltallen);
 }
 
 #endif
