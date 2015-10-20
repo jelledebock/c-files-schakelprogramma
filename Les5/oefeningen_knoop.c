@@ -97,6 +97,42 @@ struct knoop * maak_gesorteerde_lijst(struct knoop *l, int g)
    return l;   
 }
 
+struct knoop * verwijder_element(struct knoop *l, int g)
+{
+    struct knoop * tmp=l;
+    struct knoop * tmp2;
+    if(l == 0)
+        return l;
+    if(l->getal == g)
+    {
+        tmp = l->next;
+        free(l);
+        return tmp;
+    }
+    while(tmp->next != 0 && tmp->next->getal == g)
+    {
+        tmp = tmp->next;   
+    }
+    if(tmp->next != 0)
+    {
+        tmp2 = tmp->next;
+        tmp->next = tmp->next->next;
+        free(tmp2);   
+    }
+    return l;        
+}
+
+void vernietig_lijst(struct knoop **l)
+{
+    struct knoop *h;
+    while(*l != 0 )
+    {
+        h = *l;
+        *l = h->next;
+        free(h);
+    }
+}
+
 int main()
 {
     int getal_to_search;
@@ -110,7 +146,10 @@ int main()
 
     //print_lijst(lijst);
     print_lijst(lijst2);
-
+    
+    printf("Verwijder element 3\n");
+    lijst2 = verwijder_element(lijst2, 3);
+    print_lijst(lijst2);
     printf("Enter a search value:\n");
     scanf("%d",&getal_to_search);
     res = zoek_element(lijst2, getal_to_search);
