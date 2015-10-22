@@ -1,0 +1,11 @@
+In deze oefening heb ik een Node library gemaakt. Het compilen vraagt dan wel een extra stap.
+Het komt er zich op neer, dat je wanneer wijzigingen maakt aan je node structuur (node.c en node.h)
+je de library opnieuw moet compilen. Dit doe je door:
+	gcc -Wall -c node.c
+Hierdoor krijg je een node.o file. Deze is een library die je nu kan gebruiken in je executables.
+Wanneer je deze executables wil compilen, moet je de compiler ook expliciet vertellen dat je een (zelfgeschreven) library 
+wil gebruiken. Dit doe je door:
+	gcc -o mijn_programma.run mijn_programma.c node.c
+
+Voordeel van deze werkwijze is dat je wanneer je library klaar is je deze globaal op het systeem kan installeren, zodat je 
+c compiler automatisch deze library kan linken. Hiervoor moet je het compile proces van deze library wel een beetje aanpassen.
