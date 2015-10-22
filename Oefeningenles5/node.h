@@ -12,5 +12,6 @@ void print(void (*write_function)(const struct Node *),const struct Node *);
 struct Node * create_sorted_list(int n, int max);
 void remove_duplicates(struct Node **);
 void reverse(struct Node **);
-struct Node * merge(const struct Node *, const struct Node *);
+struct Node * merge(struct Node **, struct Node **);
+void add_number(struct Node **list, int number);
 #endif

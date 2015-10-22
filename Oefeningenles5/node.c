@@ -103,57 +103,69 @@ void reverse(struct Node **list)
 	}
 }
 
-struct Node * merge(const struct Node * a, const struct Node * b){
-	struct Node * merged;
-	struct Node * tmp;
+struct Node * merge(struct Node ** a, struct Node ** b){
+    struct Node * merged = NULL;
+    struct Node * tmp = NULL;
+    
+    if(*a != NULL && *b != NULL)
+    {
+        if((*a)->value < (*b)->value)
+        {
+            merged = *a;
+            *a = (*a)->next;
+        }
+        else
+        { 
+           merged = *b; 
+           *b = (*b)->next;
+        }
 
-     	if(a->value < b->value)
-	{
-		merged = malloc(sizeof(struct Node));
-		*merged = *(a);
-		a = a->next;
-	}	
-	else
-	{
-		merged = malloc(sizeof(struct Node));
-		*merged = *(b);
-		b = b->next;
-	}
-	
-	tmp = merged;
+        tmp = merged;
+    
+	    while(*a != NULL && *a != NULL)
+	    {
+            if((*a)->value < (*b)->value )
+		    {
+		        
+                tmp->next = *a;	
+			    *a = (*a)->next;
+		    }
+		    else
+		    {
+		        tmp->next = *b;
+        	    *b = (*b)->next;
+		    }
+            tmp = tmp->next;
+	    }
+    }
+    else if(*a == NULL)
+    {
+        tmp = *b;
+    }
+    else if(*b == NULL)
+    {
+        tmp = *a;
+    }
 
-	while(a != NULL && b != NULL)
-	{
-		tmp = malloc(sizeof(struct Node));
-		if( a->value < b->value )
-		{
-			*tmp = *(a);
-			a = a->next;
-		}
-		else
-		{
-			*tmp = *(b);
-			b = b->next;
-		}
-		tmp = tmp->next;
-	}
-
-	while(a != NULL)
-	{
-		tmp = malloc(sizeof(struct Node));	
-		*tmp = *(a);
-		a = a->next;
-		tmp = tmp->next;
-	}
-
-	while(b != NULL)
-	{
-		tmp = malloc(sizeof(struct Node));
-		*tmp = *(b);
-		b = b->next;
-		tmp = tmp->next;
-	}
-	tmp = NULL;
+    tmp->next = NULL;
+    *a = NULL;
+    *b = NULL;
 
 	return merged;
+}
+
+void add_number(struct Node **list, int number)
+{
+    struct Node * tmp;
+    struct Node * helper = *list;
+     
+    while(helper != NULL && helper->value < number)
+    {
+        helper = helper->next;
+    }
+    
+    tmp = malloc(sizeof(struct Node));
+    tmp->value = number;
+    tmp->next = helper->next;
+    helper->next = tmp;
 }

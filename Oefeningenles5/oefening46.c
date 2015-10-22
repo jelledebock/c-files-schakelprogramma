@@ -10,7 +10,7 @@ int main(){
 	printf("\n");
 	printf("\nDeze worden gemerged. \n\n");
 	printf("\n");
-	struct Node * mn = merge(m,n);
+	struct Node * mn = merge(&m,&n);
 	printf("\nList m:\n"); print_list(m);
 	printf("\n");
 	printf("\nList n:\n"); print_list(n);
