@@ -107,7 +107,7 @@ struct Node * merge(struct Node ** a, struct Node ** b){
     struct Node * merged = NULL;
     struct Node * tmp = NULL;
     
-    if(*a != NULL && *b != NULL)
+    if(*a && *b)
     {
         if((*a)->value < (*b)->value)
         {
@@ -122,50 +122,81 @@ struct Node * merge(struct Node ** a, struct Node ** b){
 
         tmp = merged;
     
-	    while(*a != NULL && *a != NULL)
+	    while(*a && *b)
 	    {
+            tmp = tmp->next;
             if((*a)->value < (*b)->value )
 		    {
 		        
-                tmp->next = *a;	
+                tmp = *a;	
 			    *a = (*a)->next;
 		    }
 		    else
 		    {
-		        tmp->next = *b;
+		        tmp = *b;
         	    *b = (*b)->next;
 		    }
-            tmp = tmp->next;
 	    }
     }
-    else if(*a == NULL)
+    if(*a == NULL)
     {
-        tmp = *b;
+        tmp->next = *b;
     }
-    else if(*b == NULL)
+    if(*b == NULL)
     {
-        tmp = *a;
+        tmp->next = *a;
     }
 
-    tmp->next = NULL;
     *a = NULL;
     *b = NULL;
 
 	return merged;
 }
 
+struct Node ** search_ordered(int number, struct Node ** list)
+{
+    while((*list) && (*list)->value < number)
+    {
+       list=&((*list)->next);
+    }
+    return list;
+}
+
 void add_number(struct Node **list, int number)
 {
-    struct Node * tmp;
-    struct Node * helper = *list;
-     
-    while(helper != NULL && helper->value < number)
+    struct Node ** tmp;
+    struct Node * next;
+    struct Node * tmp2;
+
+    tmp = search_ordered(number, list);
+    next = (*tmp); 
+    tmp2 = malloc(sizeof(struct Node));
+    tmp2->next = next;
+    tmp2->value = number;
+    (*tmp) = tmp2;
+}
+
+void clean_list(struct Node **list)
+{
+    if(!(*list)->next)
     {
-        helper = helper->next;
+        free(*list);
     }
-    
-    tmp = malloc(sizeof(struct Node));
-    tmp->value = number;
-    tmp->next = helper->next;
-    helper->next = tmp;
+    else
+    {
+        clean_list(&((*list)->next));
+    }
+}
+
+void remove_node(int number, struct Node **list)
+{
+    struct Node ** tmp = search_ordered(number, list);
+    struct Node * tmp2;
+
+    if((*tmp) && (*tmp)->value == number)
+    {
+        tmp2=(*tmp);
+        (*tmp) = tmp2->next;
+        free(tmp2);
+    }
 }

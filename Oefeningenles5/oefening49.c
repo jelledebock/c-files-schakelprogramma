@@ -21,4 +21,6 @@ int main()
 
     print(print_list, list);
     printf("\n");
+    
+    clean_list(&list);
 }

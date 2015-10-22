@@ -21,4 +21,15 @@ int main()
 
     print(print_list, list);
     printf("\n");
+    
+    remove_node(46,&list);
+    print(print_list, list);
+    printf("\n");
+
+
+    remove_node(103,&list);
+    print(print_list, list);
+    printf("\n");
+
+    clean_list(&list);
 }
