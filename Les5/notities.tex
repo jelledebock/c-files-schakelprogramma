@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{listings}
+\lstset{language=C}
+\title{Notities les 5}
+\author{Jelle De Bock}
+\begin{document}
+\maketitle
+\section{Const}
+\begin{itemize}
+    \item \textbf{Twee posities mogelijk} \\
+            \textit{const int *t; /\/\ pointer naar een constante int}\\
+            \textit{int const * t; /\/\ is identiek als bovenstaande, de bovenstaande wordt echter meer gebruikt  }
+            \textit{int * const t; /\/\ constante pointer}\\
+           Een pointer slaat altijd op het geen wat er voor komt, behalve wanneer het het helemaal vooraan staat, dan wat er net achter komt.
+    \item \textbf{Kleine oefening hierop} \\
+        \begin{lstlisting}
+            const int * const ** a;
+            //a is een pointer naar een pointer naar een constante
+            //pointer naar een constante int
+            //A->[]->[]=>[const int]
+            a++; //oke
+            (*a)++; //oke
+            (**a)++; //neen, want constant
+            (***a)++; //neen, want constante int
+        \end{lstlisting}
+    \item \textbf{Const bij arrays} \\
+            Niet te ver gaan met const bij pointers. Je moet er enkel zeker van zijn dat de values niet gewijzigd worden.
+\end{itemize}
+\section{Structs}
+   Tracht bij structs zo veel mogelijk met pointers te werken, want structs kunnen enorm groot zijn. 
+\section{Stack en heap}
+    Bij malloc plaats je iets op de heap. Bij stack wordt deze leeggemaakt op einde van de methode.
+\section{Linked lists}
+Nadeel van een array, is dat alles achter elkaar moet zitten. \\
+Invoegen in een array is een tijdsintensieve taak.
+\subsection{Structuur van de linked list}
+Einde van de lijst wordt aangegeven door null pointer, tenzij het een circulaire lijst is.
+\\
+Dubbelgelinkte lijst, heeft ook pointer naar zijn vorige knoop.
+\subsection{Een implementatiesuggestie}
+    \begin{lstlisting}
+        typedef struct knoop knoop;
+        //dit doe je zodat je niet elke keer "struct"
+        //hiervoor moet zetten (1x bij implementatie)
+        struct knoop{
+            int getal;
+            knoop * next; 
+        }
+    \end{lstlisting}
+\subsection{Toevoegen aan een gelinkte lijst}
+    \textbf{Enkele situaties}
+    \begin{itemize}
+        \item \textbf{Achteraan toevoegen} (zie \textit{oefeningen_knoop.c} file)
+    \end{itemize}
+\subsection{Wijzigen}
+    Om iets te wijzigen moet je met een pointer naar een pointer werken.
+\end{document}
