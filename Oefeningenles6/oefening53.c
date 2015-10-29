@@ -55,6 +55,27 @@ uint toggle_bit_at_pos(uint number, int pos)
 {
 	return number ^ (1<<(pos-1));	
 }
+
+int equal(uint x1, uint x2)
+{
+	return x1&~x2;
+}
+
+int is_even(uint x1)
+{
+	return (x1 & 1)^1;
+}
+
+void swap_even_odd(uint * x)
+{
+	uint even_mask = 0xAAAAAAAA;
+	uint odd_mask = 0x55555555;
+	
+	*x = (*x & even_mask)>>1 | (*x & odd_mask)<<1;
+}
+
+/*Exercise 53.11 checks if in a number only one bit is set*/
+
 int main()
 {
     printf("Bit at position 2 of 2: %d\n",bit_i(2,2));
@@ -71,4 +92,16 @@ int main()
     printf("Unset bit 3 of 12 on: %d\n",unset_bit_at_pos(12,3));
     printf("Toggle bit 3 of 12 on (set to off): %d\n",toggle_bit_at_pos(12,3));
     printf("Toggle bit 2 of 12 on (set to on): %d\n",toggle_bit_at_pos(12,2));
+    printf("Equal test (22==22): %d\n",equal(22,22));
+    printf("Equal test (22==100): %d\n",equal(22,100));
+    printf("Even test (23): %d\n",is_even(23));
+    printf("Even test (22): %d\n",is_even(22));
+    printf("Even test (10211): %d\n",is_even(10211));
+    uint test_swapper = 356;
+    printf("Swapping even and odd bits of: \t\t");
+    write_bits(test_swapper);
+    swap_even_odd(&test_swapper);
+    printf("\nResult of swapping even an odd bits: \t");
+    write_bits(test_swapper);
+    printf("\n");
 }
