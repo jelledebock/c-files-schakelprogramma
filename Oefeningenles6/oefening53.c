@@ -31,9 +31,30 @@ uint uint_bit_on_at_pos(int i)
 
 int num_of_bits_on(uint number)
 {
-    return 0;
+	const int BITS_IN_UINT = sizeof(number)*8;
+	int i=0;
+	int counter = 0;
+
+	for(i=0;i<BITS_IN_UINT;i++)
+	{
+		counter += (number & (1 << i))?1:0;	
+	}	
+	return counter;
+}
+uint set_bit_at_pos(uint number, int pos)
+{
+	return number | 1 << (pos-1);	
 }
 
+uint unset_bit_at_pos(uint number, int pos)
+{
+	return number & ~(1<<(pos-1)); 
+}
+
+uint toggle_bit_at_pos(uint number, int pos)
+{
+	return number ^ (1<<(pos-1));	
+}
 int main()
 {
     printf("Bit at position 2 of 2: %d\n",bit_i(2,2));
@@ -45,4 +66,9 @@ int main()
     write_bits(12);
     printf("\n");
     printf("Uint with bit 1 at position 13: %u\n",uint_bit_on_at_pos(13));
+    printf("Number of bits on in 12: %d\n",num_of_bits_on(12));
+    printf("Set bit 2 of 12 on: %d\n",set_bit_at_pos(12,2));
+    printf("Unset bit 3 of 12 on: %d\n",unset_bit_at_pos(12,3));
+    printf("Toggle bit 3 of 12 on (set to off): %d\n",toggle_bit_at_pos(12,3));
+    printf("Toggle bit 2 of 12 on (set to on): %d\n",toggle_bit_at_pos(12,2));
 }
