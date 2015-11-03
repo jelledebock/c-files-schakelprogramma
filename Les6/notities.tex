@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage{listings}
+\lstset{language=C}
+\title{Notities les 5}
+\author{Jelle De Bock}
+\begin{document}
+\maketitle
+\section{Recap vorige les c++}
+Referentietype: \textit{[const] type  \&var} \\
+eigenlijk wordt het adres meegegeven, is perfect om te gebruiken bij methodes
+in C++. Ook zeker const gebruiken wanneer het kan. \\
+Console invoer en uitvoer: \textit{cin en cout}. Je kan ze concateneren.
+\begin{lstlisting}
+    cout << "Het getal is" << getal; //uitschrijven
+    cin >> naam;
+    getline(cin, naam);
+\end{lstlisting}
+Getline na cin kuist de lijn van cin op (de enter).
+Get() vs getchar() get aanvaardt ook whitespaces...
+\section{Namespace}
+Erg vergelijkbaar met packages in Java. Dienen om collisions tussen functies
+met dezelfde naam uit verschillende libs te vermijden.
+Verschillende manieren van oproeping:
+\begin{lstlisting}
+    using std:string;
+    using std::cout;
+    using namespaces std;
+\end{lstlisting}
+Opgelet wanneer er nog eens een functie met dezelfde naam in uw file staat. Dan
+kan de compiler niet weten de welke je bedoelt (die uit de package of die in de
+file).
+\section{ios package}
+Een package die schrijven van / naar files mogelijk maakt.
+\subsection{Oefeningetje}
+De gebruiker mag 5 lijnen tekst ingeven. Deze weorden toegevoegd achteraan een
+bestand.
+
+\begin{lstlisting}
+    #include <fstream>
+    using namespace std;
+
+    int main()
+    {
+        string lijn;
+        ofstream bestand("tekst.txt",ios::app);
+
+        for(int i=0;i<5;i++)
+        {
+            getline(cin,lijn);
+            bestand << lijn << endl;
+        }
+        bestand.close();
+    }   
+\end{lstlisting}
+
+\subsection{slide 37}
+Wat doe het programmafragment?\\
+Bestand openen voor lezen en schrijven. \\
+Lees getal in tot er geen meer staat, \\
+schrijf het gewijzigde getal weg. MAAR: schrijven en lezen tegelijkertijd is
+dikke miserie...
+
+\subsection{Opmerkingen}
+Telkens je een ifstream wil gebruiken moet je de referentieoperator gebruiken.
+
+\section{Malloc en calloc varianten}
+Je mag \textit{malloc} en \textit{calloc} en de daarbijhorende \textit{free}
+nog gebruiken, maar je kan nu ook de modernere \textit{new} en \textit{delete}
+gebruiken. Voor arrays gebruik je \textit{new[]} en \textit{delete[]}
+
+\end{document}
