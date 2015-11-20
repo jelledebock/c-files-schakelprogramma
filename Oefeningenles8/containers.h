@@ -1,39 +1,14 @@
-#include <iostream>
+#ifndef containers
+#define containers
+
 #include <set>
 #include <queue>
 #include <stack>
 #include <map>
+#include <vector>
 
 using namespace std;
 
-template<typename T>
-void schrijf(T &);
-
-int main(int argc, char *argv[])
-{
-    //set
-    set<char> charset;
-    charset.insert('a');
-    charset.insert('b');
-    schrijf(charset);
-    //queue
-    queue<char> charqueue;
-    charqueue.push('a');
-    charqueue.push('b');
-    schrijf(charqueue);
-    //stack
-    stack<char> charstack;
-    charstack.push('a');
-    charstack.push('b');
-    schrijf(charstack);
-    //map
-    map<char,string> the_map;
-    the_map['a'] = "Jelle";
-    the_map['b'] = "James";
-    schrijf(the_map);
-
-    return 0;
-}
 
 template<typename T>
 void schrijf(T &structuur)
@@ -106,3 +81,25 @@ map<KEY,VALUE> & operator<<(ostream& out, const map<KEY,VALUE> &the_map)
 		cout<<it->first<<"->"<<it->second<<"\n";
 	}
 }
+
+template<typename T>
+ostream & operator<<(ostream& out,vector<T> &v)
+{
+    schrijf(v);
+}
+
+template<typename T>
+void schrijf(vector<T> &v)
+{
+    if(v.size()>0)
+    {
+        cout<<"["<<v[0];
+        for (int i = 1; i < v.size(); ++i) {
+            cout <<" | "<< v[i] << " ";
+        }
+        cout<<"]";
+    }
+}
+
+
+#endif
