@@ -2,7 +2,7 @@
 #include <ostream>
 #include "breuk.h"
 
-using namespace Breuk_namespace;
+using namespace std;
 
 static int ggd(int a, int b){
     if(a < 0 || b < 0){
@@ -19,54 +19,79 @@ static int ggd(int a, int b){
     return ggd(b,a%b);
 }
 
+bool is_stambreuk(Breuk& breuk)
+{
+    return (breuk.getTeller()/ggd(breuk.getTeller(),breuk.getNoemer())==1?true:false);
+}
+
+Breuk::Breuk(): teller(0), noemer(0){}
 
 Breuk::Breuk(int teller, int noemer): teller(teller), noemer(noemer){}
 
-Breuk::Breuk(int teller)
-{
-    this->teller = teller;
-    noemer = 1;
-}
+Breuk::Breuk(int teller):teller(teller), noemer(1){}
+
 Breuk Breuk::operator+(Breuk& breuk)
 {
-    int deler = ggd(this->noemer, breuk.noemer);
+    int new_teller = teller*breuk.noemer+breuk.teller*noemer;
+    int new_noemer = noemer*breuk.noemer;
 
-    return Breuk((teller+breuk.teller)*deler,deler);
+    int deler = ggd(new_teller,new_noemer);
+
+    return Breuk(new_teller/deler,new_noemer/deler);
 }
 
 Breuk Breuk::operator-(Breuk& breuk)
 {
-    int deler = ggd(this->noemer, breuk.noemer);
+    int new_teller = teller*breuk.noemer-breuk.teller*noemer;
+    int new_noemer = noemer*breuk.noemer;
 
-    return Breuk((teller-breuk.teller)*deler,deler);
+    int deler = ggd(new_teller,new_noemer);
+
+    return Breuk(new_teller/deler,new_noemer/deler);
 }
 
 Breuk Breuk::operator*(Breuk& breuk)
 {
-    return Breuk(teller*breuk.teller,noemer*breuk.noemer);
+    int new_teller = teller*breuk.teller;
+    int new_noemer = noemer*breuk.noemer;
+
+    int deler = ggd(new_teller,new_noemer);
+
+    return Breuk(new_teller/deler, new_noemer/deler);
 }
 
 Breuk Breuk::operator/(Breuk& breuk)
 {
-    return Breuk(teller*breuk.noemer,noemer*breuk.teller);
+    int new_teller = teller*breuk.noemer;
+    int new_noemer = noemer*breuk.teller;
+
+    int deler = ggd(new_teller, new_noemer);
+
+    return Breuk(new_teller/deler,new_noemer/deler);
 }
 
 Breuk& Breuk::operator+=(Breuk& breuk)
 {
-    int deler = ggd(noemer, breuk.noemer);
+    int new_teller = teller*breuk.noemer+breuk.teller*noemer;
+    int new_noemer = noemer*breuk.noemer;
 
-    teller = (teller + breuk.teller)*deler;
-    noemer = deler;
+    int deler = ggd(new_teller,new_noemer);
+
+    teller = new_teller/deler;
+    noemer = new_noemer/deler;
 
     return *this;
 }
 
 Breuk& Breuk::operator-=(Breuk& breuk)
 {
-    int deler = ggd(noemer, breuk.noemer);
+    int new_teller = teller*breuk.noemer-breuk.teller*noemer;
+    int new_noemer = noemer*breuk.noemer;
 
-    teller = (teller - breuk.teller)*deler;
-    noemer = deler;
+    int deler = ggd(new_teller,new_noemer);
+
+    teller = new_teller/deler;
+    noemer = new_noemer/deler;
 
     return *this;
 }
@@ -76,6 +101,11 @@ Breuk& Breuk::operator*=(Breuk& breuk)
     teller = teller*breuk.teller;
     noemer = noemer*breuk.noemer;
 
+    int deler = ggd(teller,noemer);
+
+    teller = teller/deler;
+    noemer = noemer/deler;
+
     return *this;
 }
 
@@ -83,6 +113,11 @@ Breuk& Breuk::operator/=(Breuk& breuk)
 {
     teller = teller*breuk.noemer;
     noemer = noemer*breuk.teller;
+
+    int deler = ggd(teller,noemer);
+
+    teller = teller/deler;
+    noemer = noemer/deler;
 
     return *this;
 }
@@ -97,9 +132,43 @@ int Breuk::getNoemer() const
     return noemer;
 }
 
-std::ostream& Breuk_namespace::operator<<(std::ostream& os, const Breuk& breuk)
+std::ostream& operator<<(std::ostream &out, const Breuk& breuk)
 {
-    os << breuk.getTeller() << "/" << breuk.getNoemer();
+    out << breuk.getTeller();
+    if(breuk.getNoemer()!=1)
+        out << "/" << breuk.getNoemer();
 
-    return os;
+    return out;
+}
+
+std::istream& operator>>(std::istream &in, Breuk& breuk)
+{
+    char c;
+    in>>breuk.teller>>c>>breuk.noemer;
+
+    return in;    
+}
+
+bool Breuk::operator==(const Breuk& breuk)
+{
+    int deler = ggd(noemer, breuk.noemer);
+
+    if(teller*deler==breuk.teller*deler && noemer*deler==breuk.noemer*deler)
+    {
+        return true;
+    }
+    return false;
+}
+
+Breuk& Breuk::vermenigvuldigd_met(const Breuk& breuk) 
+{
+    int new_teller = teller*breuk.getTeller();
+    int new_noemer = noemer*breuk.getNoemer();
+
+    int deler = ggd(new_teller,new_noemer);
+
+    teller=new_teller/deler;
+    noemer=new_noemer/deler;
+
+    return *this;
 }
