@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage{listings}
+\lstset{language=C++}
+\title{Notities les 8}
+\author{Jelle De Bock}
+\begin{document}
+\maketitle
+\section{Voorbeeldklasse}
+\begin{lstlisting}
+class Student{
+    public:
+        Student();
+        Student(int nr, const string &nm, int aantal = 0, 
+            const int *ptn = 0);  
+        //waarom &nm je wil voorkomen om grote waardes 
+        //te moeten kopieren
+        ~Student(){
+           if (punten) delete[] punten; //is een soort free 
+        }       
+        void print() const; //een garantie dat je niets wijzigt 
+        //in klasse
+
+    private:
+        int stnr;
+        string naam;
+        int aantalPunten;
+        int *punten;
+};
+
+Student::Student()
+{
+    stnr = 0; //niet auto nul!!
+    aantalPunten = 0;
+    punten = 0;
+}
+
+void Student::print() const{
+    //...
+}
+
+int main()
+{
+    Student s1(20021923, "Jan Jansen", 4, ptn); //constructor opgeroepen
+    Student s3; //default constructor opgeroepen
+}
+\end{lstlisting}
+\section{De copy constructor}
+Kopieert een bestaand object naar een nieuw objectje. Wordt in cpp zeer vaak
+gebruikt. Standaard is hij al aanwezig. Deze wordt immers vaak gebruikt,
+bijvoorbeeld in volgende gevallen.
+\begin{itemize}
+    \item \texttt{Student std2(std1);}
+    \item \texttt{return std1};
+    \item \texttt{void functie(Student st) //st is value parameter}
+\end{itemize}
+\end{document}
