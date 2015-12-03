@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage{listings}
+\lstset{language=C++}
+\title{Notities les 10}
+\author{Jelle De Bock}
+\begin{document}
+\maketitle
+\section{Copy operator overloading}
+\begin{lstlisting}
+    A& operator=(const A& a){
+        //delete[] van iets wat geinitialiseerd is op NULL niet erg
+        delete [] tabA;
+        if(grA > 0)
+        {
+            tabA = new int[grA];
+            for(int i=0;i<grA;i++)
+            {
+                tabA[i]=a.tabA[i];
+            }
+        }
+        return *this;
+    }
+\end{lstlisting}
+Probleem bij deze versie is wanneer je a=a zou doen je niks meer overhoudt.
+Je moet dit oplossen door te kijken of ze niet naar hetzelfde adres wijzen.
+\begin{lstlisting}
+    A& operator=(const A& a){
+        //delete[] van iets wat geinitialiseerd is op NULL niet erg
+        //Zeer belangrijke if voor de gevallen a=a
+        if(&a != this)
+        {
+            delete [] tabA;
+            if(grA > 0)
+            {
+                tabA = new int[grA];
+                for(int i=0;i<grA;i++)
+                {
+                    tabA[i]=a.tabA[i];
+                }
+            }
+        }
+        return *this;
+    }
+\end{lstlisting}
+\section{Polymorfisme}
+Verschil \textit{Leerkracht("Jan","Talen");}  en \textit{new
+Leerkracht("Els","Podii");}. De
+eerste variant maakt het object. Het andere maakt een POINTER naar een object
+met de gewenste attributen.
+\end{document}
