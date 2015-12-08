@@ -21,16 +21,15 @@ void oef2()
     my_queue.push("Twee");
     my_queue.push("Drie");
     schrijf(my_queue);
-    schrijf(my_queue);
 }
 
 void oef3()
 {
-    vector<vector<string> > vector_array(AANTAL,vector<string>(0));
+    vector<string> vector_array[AANTAL];
     vector_array[1].push_back("aap");
     vector_array[1].push_back("noot");
     vector_array[1].push_back("mies");
-    schrijf(vector_array);
+    schrijf<string>(vector_array,AANTAL);
 }
 
 int main(int argc, char *argv[])
