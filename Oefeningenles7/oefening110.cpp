@@ -9,17 +9,17 @@ int main(int argc, char *argv[])
 {
     bool even=false;
     bool open_success;
-    bool reading_ok=false;
+    bool reading_ok=true;
 
     if(argc>1)
     {
         vector<ifstream> input(argc-1);
 
         //Open files
-        for(int i = 1; i<argc-1; i++)
+        for(int i = 1; i<argc; i++)
         {
-            input[i].open(argv[i],ios::in);        
-            open_success=input[i].is_open();
+            input[i-1].open(argv[i],ios::in);        
+            open_success=input[i-1].is_open();
         }
 
         //Check if all files were opened
@@ -33,14 +33,17 @@ int main(int argc, char *argv[])
             //Read from even files
             while(reading_ok)
             {
-                int i = 0+linenum%2; //check even or odd
-                while(i<argc-1 && reading_ok)
+                //if even line, read even indexes, skip others
+                //if odd line, read odd indexes, skip others
+                int i = 0; //check even or odd
+                bool even = (linenum%2==0);
+                while(i<input.size() && reading_ok)
                 {
                     line="";
-                    getline(input[i],line);
-                    output<<line;
-                    reading_ok = input[i].good();
-                    i+=2;
+                    reading_ok = getline(input[i],line);
+                    if((even&&i%2==0)||(!even&&i%2==1))
+                        output<<line;
+                    i++;
                 }
                 linenum++;
             }
