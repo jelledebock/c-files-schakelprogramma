@@ -222,3 +222,16 @@ Breuk operator*(int number,const Breuk& breuk)
     return Breuk(breuk.teller*number,breuk.noemer);
 }
 
+Breuk& Breuk::operator++()
+{
+	++noemer;
+
+	return *this;
+}
+
+Breuk& Breuk::operator++(int)
+{
+	++teller;
+	
+	return *this;
+}

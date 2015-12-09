@@ -15,6 +15,8 @@ class Breuk
         Breuk& operator*=(Breuk& breuk);
         Breuk& vermenigvuldigd_met(const Breuk& breuk);
         Breuk operator*(int number);
+	Breuk& operator++();
+	Breuk& operator++(int);
 
         bool operator==(const Breuk& breuk);
         bool operator<(const Breuk& breuk) const;
