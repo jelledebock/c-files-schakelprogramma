@@ -93,11 +93,11 @@ void Cirkel::schrijf_soort(ostream &out) const{
     out<<"cirkel"<<endl;
 }
 int main(){
-    vector<Figuur*> container={ new Rechthoek(3.4,3.7), new Vierkant(2.3), new Rechthoek(3,5) };
+    vector<Figuur*> container={ new Cirkel(3), new Vierkant(2.3), new Rechthoek(3,5) };
 
-    for(Figuur *rechthoek: container)
+    for(Figuur *figuur: container)
     {
-        cout<<*rechthoek;
+        cout<<*figuur;
     }
 
     return 0;
