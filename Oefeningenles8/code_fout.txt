@@ -1,0 +1,11 @@
+int main()
+{
+    cout<<"Hello world";
+
+    if("ik"=="ik")
+    {
+        if ( "lol" == "LOL")
+        {
+            return true;
+    }
+}

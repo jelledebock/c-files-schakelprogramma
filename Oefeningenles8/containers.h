@@ -34,8 +34,9 @@ ostream & operator<<(ostream& out, const set<T> &set)
             out<<","<<*it;
             it++;
         }
-        cout<<"}";
+        out<<"}";
     }
+    return out;
 }
 
     template<typename T>
@@ -55,15 +56,16 @@ ostream& operator<<(ostream& out,const queue<T> &the_queue)
         }
         out<<"]";
     }
+    return out;
 }
 
     template<typename T>
 ostream& operator<<(ostream& out, const vector<T> &the_vec)
 {
-    int i=0; 
     if(the_vec.size()>0)
     {
-        out<<"["<<the_vec[i];
+        out<<"["<<the_vec[0];
+        int i=1; 
         while(i<the_vec.size())
         {
             out<<"|"<<the_vec[i];
@@ -72,6 +74,7 @@ ostream& operator<<(ostream& out, const vector<T> &the_vec)
         }
         out<<"]";
     }
+    return out;
 }
     template<typename T>
 ostream & operator<<(ostream& out, const stack<T> &the_stack)
@@ -84,7 +87,8 @@ ostream & operator<<(ostream& out, const stack<T> &the_stack)
         out<<tmp.top();
         tmp.pop();
     }
-    cout<<"\n";
+    out<<"\n";
+    return out;
 }
 
     template<typename KEY, typename VALUE>
@@ -96,7 +100,9 @@ ostream & operator<<(ostream& out, const map<KEY,VALUE> &the_map)
     {
         out<<it->first<<"->"<<it->second<<"\n";
     }
+    return out;
 }
+
     template<typename T>
 void schrijf(vector<T> &v)
 {
