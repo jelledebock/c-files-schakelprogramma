@@ -1,6 +1,7 @@
 #include <cmath>
 #include <ostream>
 #include "breuk.h"
+#include <sstream>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ bool is_stambreuk(Breuk& breuk)
     return (breuk.getTeller()/ggd(breuk.getTeller(),breuk.getNoemer())==1?true:false);
 }
 
-Breuk::Breuk(): teller(0), noemer(0){}
+Breuk::Breuk(): teller(1), noemer(1){}
 
 Breuk::Breuk(int teller, int noemer): teller(teller), noemer(noemer){}
 
@@ -143,10 +144,40 @@ std::ostream& operator<<(std::ostream &out, const Breuk& breuk)
 
 std::istream& operator>>(std::istream &in, Breuk& breuk)
 {
-    char c;
-    in>>breuk.teller>>c>>breuk.noemer;
+    string getalbeeld;  
 
-    return in;    
+    in >> getalbeeld;
+
+    stringstream ss; ss << getalbeeld;
+
+    int positie = getalbeeld.find("/");
+
+    if(positie != (int)string::npos) {
+
+        int t; char c; int n;
+
+        ss >> t; ss >> c; ss >> n;  
+
+        if(c == '/' && !ss.fail()) breuk = Breuk(t,n); 
+
+        else breuk = Breuk();
+
+    }
+
+    else {  
+        //misschien is er geen breukstreep, omdat je
+        //enkel een geheel getal (dus met noemer = 1) opgaf
+
+        int t; ss >> t;
+
+        string overschot; ss >> overschot;           
+
+        if(overschot == "") breuk = Breuk(t); 
+
+        else breuk = Breuk();
+
+    }
+    return in;
 }
 
 bool Breuk::operator==(const Breuk& breuk)
@@ -160,6 +191,14 @@ bool Breuk::operator==(const Breuk& breuk)
     return false;
 }
 
+bool Breuk::operator<(const Breuk& breuk) const
+{
+    double res1 = teller/noemer;
+    double res2 = breuk.teller/breuk.noemer;
+
+    return res1<res2;
+}
+
 Breuk& Breuk::vermenigvuldigd_met(const Breuk& breuk) 
 {
     int new_teller = teller*breuk.getTeller();
@@ -171,4 +210,28 @@ Breuk& Breuk::vermenigvuldigd_met(const Breuk& breuk)
     noemer=new_noemer/deler;
 
     return *this;
+}
+
+Breuk Breuk::operator*(int number)
+{
+    return Breuk(teller*number,noemer);
+}
+
+Breuk operator*(int number,const Breuk& breuk)
+{
+    return Breuk(breuk.teller*number,breuk.noemer);
+}
+
+Breuk& Breuk::operator++()
+{
+	++noemer;
+
+	return *this;
+}
+
+Breuk& Breuk::operator++(int)
+{
+	++teller;
+	
+	return *this;
 }

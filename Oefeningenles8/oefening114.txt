@@ -1,0 +1,10 @@
+Enkel de declaraties:
+
+a)  set<string> woorden;
+b)  vector<string> woorden;
+c)  vector<string> bestand;
+    stack<string> bestandstack;
+d)  wanneer je de woorden kan inlezen kan je ze meteen meetellen...
+e)  idem
+f)  map<string,int> frequentietabel;
+g)  map<string, vector<int>> voorkomens;

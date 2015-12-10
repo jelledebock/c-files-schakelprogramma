@@ -10,96 +10,123 @@
 using namespace std;
 
 
-template<typename T>
+    template<typename T>
 void schrijf(T &structuur)
 {
     cout<<structuur;
-    cout<<"\n";
+    cout<<endl;
 }
 
-template<typename T>
-set<T> & operator<<(ostream& out, const set<T> &set)
+    template<typename T>
+ostream & operator<<(ostream& out, const set<T> &set)
 {
     typename set<T>::const_iterator it;
-    
+
     it = set.begin();
 
     if(set.size())
     {
-        cout<<"{"<<*it;
+        out<<"{"<<*it;
         it++;
 
         while(it!=set.end())
         {
-            cout<<","<<*it;
+            out<<","<<*it;
             it++;
         }
-        cout<<"}";
+        out<<"}";
     }
+    return out;
 }
 
-template<typename T>
-queue<T> & operator<<(ostream& out,const queue<T> &the_queue)
+    template<typename T>
+ostream& operator<<(ostream& out,const queue<T> &the_queue)
 {
     queue<T> tmp(the_queue);
 
     if(!tmp.empty())
     {
-        cout<<"["<<tmp.front();
+        out<<"["<<tmp.front();
         tmp.pop();
 
         while(!tmp.empty())
         {
-            cout<<"|"<<tmp.front();
-	    tmp.pop();
+            out<<"|"<<tmp.front();
+            tmp.pop();
         }
-        cout<<"]";
+        out<<"]";
     }
+    return out;
 }
 
-template<typename T>
-stack<T> & operator<<(ostream& out, const stack<T> &the_stack)
+    template<typename T>
+ostream& operator<<(ostream& out, const vector<T> &the_vec)
+{
+    if(the_vec.size()>0)
+    {
+        out<<"["<<the_vec[0];
+        int i=1; 
+        while(i<the_vec.size())
+        {
+            out<<"|"<<the_vec[i];
+
+            i++;
+        }
+        out<<"]";
+    }
+    return out;
+}
+    template<typename T>
+ostream & operator<<(ostream& out, const stack<T> &the_stack)
 { 
-	stack<T> tmp(the_stack);
+    stack<T> tmp(the_stack);
 
-	while(!tmp.empty())
-	{
-		cout<<"\n";
-		cout<<tmp.top();
-		tmp.pop();
-	}
-	cout<<"\n";
+    while(!tmp.empty())
+    {
+        out<<"\n";
+        out<<tmp.top();
+        tmp.pop();
+    }
+    out<<"\n";
+    return out;
 }
 
-template<typename KEY, typename VALUE>
-map<KEY,VALUE> & operator<<(ostream& out, const map<KEY,VALUE> &the_map)
+    template<typename KEY, typename VALUE>
+ostream & operator<<(ostream& out, const map<KEY,VALUE> &the_map)
 {
-	typename map<KEY,VALUE>::const_iterator it;
+    typename map<KEY,VALUE>::const_iterator it;
 
-	for(it=the_map.begin();it!=the_map.end();++it)
-	{
-		cout<<it->first<<"->"<<it->second<<"\n";
-	}
+    for(it=the_map.begin();it!=the_map.end();++it)
+    {
+        out<<it->first<<"->"<<it->second<<"\n";
+    }
+    return out;
 }
 
-template<typename T>
-ostream & operator<<(ostream& out,vector<T> &v)
-{
-    schrijf(v);
-}
-
-template<typename T>
+    template<typename T>
 void schrijf(vector<T> &v)
 {
     if(v.size()>0)
     {
         cout<<"["<<v[0];
-        for (int i = 1; i < v.size(); ++i) {
+        for (int i = 1; i < v.size(); ++i) 
+        {
             cout <<" | "<< v[i] << " ";
         }
         cout<<"]";
     }
 }
 
-
+    template<typename T>
+void schrijf(vector<T> v[], int aantal)
+{
+    cout<<"{";
+    for(int i=0;i<aantal;i++)
+    {
+        cout<<"{";
+        cout<<v[i];
+        cout<<"}";
+    }
+    cout<<"}";
+}    
 #endif
