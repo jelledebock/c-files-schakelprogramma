@@ -12,6 +12,7 @@ class Complex_num
     Complex_num(int _i, int _j) : i(_i), j(_j) {};
     Complex_num(int _i) : i(_i), j(0) {};
     Complex_num(string notatie);
+    Complex_num operator+(Complex_num c)const;
     friend Complex_num complex_sum(Complex_num c1, Complex_num c2);
     friend ostream& operator<<(ostream &out, const Complex_num &c);
 };
@@ -31,16 +32,20 @@ Complex_num::Complex_num(string notatie)
     j = complex_part;
 }
 
+Complex_num Complex_num::operator+(Complex_num c)const
+{
+    return complex_sum(*this,c);
+}
 
 ostream& operator<<(ostream &out, const Complex_num &cnum)
 {
     string complex_part;
 
     out<<cnum.i;
-    
+
     if(cnum.j!=0)
     {
-    out<<"+"<< (cnum.j)<<"j";
+        out<<(cnum.j>0?"+":"")<< (cnum.j)<<"j";
     }
 
     return out;
