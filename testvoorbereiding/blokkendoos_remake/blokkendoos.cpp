@@ -22,41 +22,6 @@ class Blokkendoos : vector<unique_ptr<Figuur>>{
         }
 };
 
-Figuur* lees_figuur(ifstream &in)
-{
-    string type;
-    double arg1,arg2;
-    string line_s;
-
-    getline(in,line_s);
-
-    stringstream line(line_s);
-    
-    line>>type;    
-    
-    if(type=="cirkel")
-    {
-        line>>arg1;
-        cout<<"Found a circle!"<<endl;
-        return new Cirkel(arg1);
-    }
-    else if(type=="rechthoek")
-    {
-        line>>arg1;
-        line>>arg2;
-        cout<<"Found a rectangle!"<<endl;
-        return new Rechthoek(arg1,arg2);
-    }
-    else if(type=="vierkant")
-    {
-        cout<<"Found a square!"<<endl;
-        line>>arg1;
-        return new Vierkant(arg1);        
-    }
-    else return NULL;
-
-}
-
 Blokkendoos::Blokkendoos(const string & bestandsnaam)
 {
     ifstream infile;

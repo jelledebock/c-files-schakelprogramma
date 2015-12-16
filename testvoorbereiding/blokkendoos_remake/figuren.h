@@ -5,6 +5,7 @@
 #include <vector>
 using namespace std;
 
+
 class Figuur{
 	public:
 		virtual double omtrek()const = 0;
@@ -65,3 +66,35 @@ class Vierkant : public Rechthoek{
 	public:
 		Vierkant(double z):Rechthoek(z,z){}
 };
+
+Figuur* lees_figuur(ifstream &in)
+{
+    string type;
+    double arg1,arg2;
+    string line_s;
+
+    getline(in,line_s);
+
+    stringstream line(line_s);
+    
+    line>>type;    
+    
+    if(type=="cirkel")
+    {
+        line>>arg1;
+        return new Cirkel(arg1);
+    }
+    else if(type=="rechthoek")
+    {
+        line>>arg1;
+        line>>arg2;
+        return new Rechthoek(arg1,arg2);
+    }
+    else if(type=="vierkant")
+    {
+        line>>arg1;
+        return new Vierkant(arg1);        
+    }
+    else return NULL;
+
+}

@@ -1,0 +1,1 @@
+g++ tests.cpp -lgtest -lpthread -o runtests
